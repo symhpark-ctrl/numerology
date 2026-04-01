@@ -1,94 +1,136 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수비학 계산기</title>
-    <style>
-        body { font-family: sans-serif; background: #f8f7f4; color: #2c2c2a; text-align: center; padding: 20px; }
-        .card { background: white; padding: 20px; border-radius: 15px; max-width: 500px; margin: 20px auto; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        input, select { padding: 10px; margin: 5px; border: 1px solid #ddd; border-radius: 5px; }
-        button { padding: 12px 20px; background: #3C3489; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        #result { display: none; margin-top: 20px; text-align: left; }
-        .num-box { display: flex; justify-content: space-around; margin-bottom: 20px; }
-        .num-item { background: #eee; padding: 15px; border-radius: 10px; width: 45%; text-align: center; }
-        .big-num { font-size: 40px; font-weight: bold; color: #3C3489; }
-        .cta-btn { display: block; background: #3C3489; color: white; text-decoration: none; padding: 15px; border-radius: 10px; margin-top: 20px; font-weight: bold; text-align: center; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>수비학 계산기</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple-800: #3C3489; --purple-600: #534AB7; --purple-400: #7F77DD; --purple-200: #AFA9EC;
+      --teal-600: #0F6E56; --teal-400: #1D9E75; --gray-50: #F8F7F4; --gray-100: #EFEFEA;
+      --gray-300: #C8C7BF; --gray-500: #888780; --gray-800: #2C2C2A; --white: #FFFFFF;
+    }
+    body { font-family: 'Noto Sans KR', sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; line-height: 1.7; }
+    .hero { background: var(--purple-800); color: white; text-align: center; padding: 4rem 1.5rem 3rem; position: relative; }
+    .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 600; }
+    .container { max-width: 640px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .card { background: var(--white); border-radius: 16px; border: 1px solid var(--gray-100); padding: 1.75rem; margin-bottom: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
+    .field label { display: block; font-size: 12px; color: var(--gray-500); margin-bottom: 6px; }
+    .field input, .field select { width: 100%; padding: 11px 13px; border: 1.5px solid var(--gray-300); border-radius: 10px; font-size: 15px; background: var(--gray-50); }
+    .btn-main { width: 100%; padding: 15px; background: var(--purple-800); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; }
+    .result-section { display: none; }
+    .result-section.show { display: block; }
+    .num-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
+    .num-card { background: var(--gray-50); border-radius: 12px; padding: 1.25rem; text-align: center; border: 1px solid var(--gray-100); }
+    .num-card .big { font-size: 58px; font-weight: 700; font-family: 'Noto Serif KR', serif; line-height: 1; }
+    .lp .big { color: var(--purple-800); } .py .big { color: var(--teal-600); }
+    .meaning-card { background: var(--white); border-radius: 16px; border: 1px solid var(--gray-100); padding: 1.5rem; margin-bottom: 1rem; }
+    .insight { font-size: 14px; color: #555; border-left: 3px solid var(--purple-200); padding-left: 14px; }
+    .cta-card { background: var(--purple-800); border-radius: 16px; padding: 2.5rem 1.5rem; text-align: center; color: white; margin-top: 2rem; }
+    .cta-link { display: inline-block; padding: 14px 32px; background: white; color: var(--purple-800); border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; margin-bottom: 1.5rem; }
+    .share-row { display: flex; gap: 8px; justify-content: center; }
+    .share-tag { font-size: 12px; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 7px 14px; border-radius: 20px; cursor: pointer; }
+    @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
 
-    <h1><span id="y1"></span>년 수비학 운세</h1>
+<div class="hero">
+  <h1>나의 숫자로 읽는<br><span id="heroYear"></span>년 운명의 흐름</h1>
+</div>
 
-    <div class="card">
-        <input type="number" id="year" placeholder="연도(예: 1990)" style="width: 100px;">
+<div class="container">
+  <div class="card">
+    <div class="input-grid">
+      <div class="field"><label>연도</label><input type="number" id="year" placeholder="1990"></div>
+      <div class="field"><label>월</label>
         <select id="month">
-            <option value="1">1월</option><option value="2">2월</option><option value="3">3월</option>
-            <option value="4">4월</option><option value="5">5월</option><option value="6">6월</option>
-            <option value="7">7월</option><option value="8">8월</option><option value="9">9월</option>
-            <option value="10">10월</option><option value="11">11월</option><option value="12">12월</option>
+          <option value="1">1월</option><option value="2">2월</option><option value="3">3월</option>
+          <option value="4">4월</option><option value="5">5월</option><option value="6">6월</option>
+          <option value="7">7월</option><option value="8">8월</option><option value="9">9월</option>
+          <option value="10">10월</option><option value="11">11월</option><option value="12">12월</option>
         </select>
-        <input type="number" id="day" placeholder="일" style="width: 60px;">
-        <br><br>
-        <button onclick="calc()">결과 확인하기</button>
-
-        <div id="result">
-            <div class="num-box">
-                <div class="num-item">
-                    <div style="font-size: 12px;">생애 경로 수</div>
-                    <div class="big-num" id="lp"></div>
-                </div>
-                <div class="num-item">
-                    <div style="font-size: 12px;"><span id="y2"></span> 개인 연도 수</div>
-                    <div class="big-num" id="py" style="color: #0F6E56;"></div>
-                </div>
-            </div>
-            <p><strong>생애 경로 수 리딩:</strong> <span id="lpIn"></span></p>
-            <p><strong>올해의 에너지:</strong> <span id="pyIn"></span></p>
-            
-            <a href="https://blog.naver.com/symhp1130" class="cta-btn">블로그 구독하러 가기 →</a>
-        </div>
+      </div>
+      <div class="field"><label>일</label><input type="number" id="day" placeholder="17"></div>
     </div>
+    <button class="btn-main" onclick="calculate()">나의 수비학 수 계산하기 →</button>
+  </div>
 
-    <script>
-        const curY = new Date().getFullYear();
-        document.getElementById('y1').innerText = curY;
-        document.getElementById('y2').innerText = curY;
+  <div class="result-section" id="result">
+    <div class="num-grid">
+      <div class="num-card lp"><div class="label">생애 경로 수</div><div class="big" id="lpNum"></div><div id="lpName"></div></div>
+      <div class="num-card py"><div class="label"><span id="pyYearLabel"></span> 개인 연도 수</div><div class="big" id="pyNum"></div><div id="pyName"></div></div>
+    </div>
+    <div class="meaning-card">
+      <h3 id="lpTitle"></h3>
+      <div class="insight" id="lpInsight"></div>
+    </div>
+    <div class="meaning-card">
+      <h3 id="pyTitle"></h3>
+      <div class="insight" id="pyInsight" style="border-left-color: var(--teal-400);"></div>
+    </div>
+    <div class="cta-card">
+      <a href="https://blog.naver.com/symhp1130" class="cta-link">블로그 구독하러 가기 →</a>
+      <div class="share-row">
+        <button class="share-tag" onclick="shareResult()">결과 공유하기</button>
+        <button class="share-tag" onclick="window.location.reload()">다시 계산하기</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-        const info = {
-            1: "독립과 새로운 시작의 에너지", 2: "협력과 조화의 에너지", 3: "창의성과 소통의 에너지",
-            4: "안정과 성실의 에너지", 5: "변화와 자유의 에너지", 6: "사랑과 책임의 에너지",
-            7: "지혜와 성찰의 에너지", 8: "성취와 영향력의 에너지", 9: "완성과 이타심의 에너지",
-            11: "직관과 영감(마스터)", 22: "현실적 성취(마스터)", 33: "치유와 헌신(마스터)"
-        };
+<script>
+const currentYear = new Date().getFullYear();
+document.getElementById('heroYear').innerText = currentYear;
+document.getElementById('pyYearLabel').innerText = currentYear;
 
-        function getSum(n) {
-            return String(n).split('').reduce((a, b) => a + Number(b), 0);
-        }
+const data = {
+  1: { name: "시작", insight: "독립과 리더십의 에너지입니다. 스스로 길을 개척할 때 가장 빛납니다." },
+  2: { name: "연결", insight: "관계와 협력의 에너지입니다. 조화와 배려가 당신의 핵심 강점입니다." },
+  3: { name: "창조", insight: "표현과 즐거움의 에너지입니다. 창의적인 소통을 통해 긍정을 전파하세요." },
+  4: { name: "건설", insight: "안정과 성실의 에너지입니다. 탄탄한 기반을 다지는 데 탁월한 능력이 있습니다." },
+  5: { name: "변화", insight: "자유와 모험의 에너지입니다. 변화를 통해 성장하고 새로운 경험을 즐기세요." },
+  6: { name: "양육", insight: "책임과 사랑의 에너지입니다. 가족과 주변을 돌보는 따뜻한 마음을 지녔습니다." },
+  7: { name: "재평가", insight: "지혜와 성찰의 에너지입니다. 내면의 소리에 집중할 때 답을 얻습니다." },
+  8: { name: "확장", insight: "성취와 영향력의 에너지입니다. 큰 목표를 향한 비즈니스 감각이 뛰어납니다." },
+  9: { name: "완성", insight: "인류애와 봉사의 에너지입니다. 세상을 품는 넓은 마음으로 마무리하는 시기입니다." },
+  11: { name: "마스터 11", insight: "강한 직관력과 영감을 지닌 비전가입니다. 빛을 전하는 역할을 수행하세요." },
+  22: { name: "마스터 22", insight: "현실의 대형 프로젝트를 실현하는 마스터 빌더입니다. 큰 변화를 만드세요." },
+  33: { name: "마스터 33", insight: "무조건적인 사랑과 치유를 전하는 교사입니다. 타인을 돕는 사명이 있습니다." }
+};
 
-        function reduce(n, master) {
-            while (n > 9) {
-                if (master && (n === 11 || n === 22 || n === 33)) break;
-                n = getSum(n);
-            }
-            return n;
-        }
+function digitSum(n) { return String(n).split('').reduce((a, c) => a + (parseInt(c) || 0), 0); }
+function reduceNum(n, m) { while (n > 9) { if (m && (n==11||n==22||n==33)) break; n = digitSum(n); } return n; }
 
-        function calc() {
-            const y = document.getElementById('year').value;
-            const m = document.getElementById('month').value;
-            const d = document.getElementById('day').value;
-            if(!y || !m || !d) return alert("날짜를 입력해주세요.");
+function calculate() {
+  const y = document.getElementById('year').value;
+  const m = document.getElementById('month').value;
+  const d = document.getElementById('day').value;
+  if (!y || !m || !d) return alert("생년월일을 입력해주세요.");
 
-            const lp = reduce(getSum(y) + getSum(m) + getSum(d), true);
-            const py = reduce(getSum(curY) + getSum(m) + getSum(d), false);
+  const lp = reduceNum(digitSum(y) + digitSum(m) + digitSum(d), true);
+  const py = reduceNum(digitSum(currentYear) + digitSum(m) + digitSum(d), false);
 
-            document.getElementById('lp').innerText = lp;
-            document.getElementById('py').innerText = py;
-            document.getElementById('lpIn').innerText = info[lp] || info[9];
-            document.getElementById('pyIn').innerText = info[py] || info[9];
-            document.getElementById('result').style.display = 'block';
-        }
-    </script>
+  document.getElementById('lpNum').innerText = lp;
+  document.getElementById('pyNum').innerText = py;
+  document.getElementById('lpName').innerText = data[lp].name;
+  document.getElementById('pyName').innerText = data[py].name;
+  document.getElementById('lpTitle').innerText = "생애 경로 수 " + lp;
+  document.getElementById('pyTitle').innerText = currentYear + "년 에너지 흐름 " + py;
+  document.getElementById('lpInsight').innerText = data[lp].insight;
+  document.getElementById('pyInsight').innerText = data[py].insight;
+  document.getElementById('result').classList.add('show');
+}
+
+function shareResult() {
+  const text = "나의 수비학 결과 확인하기!";
+  if (navigator.share) { navigator.share({ title: '수비학 계산기', text: text }); }
+  else { alert("결과가 저장되었습니다."); }
+}
+</script>
 </body>
 </html>
