@@ -254,33 +254,22 @@
     .cta-card {
       background: var(--purple-800);
       border-radius: 16px;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       text-align: center;
       color: white;
       margin-bottom: 1rem;
     }
-    .cta-card h3 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 0.6rem;
-    }
-    .cta-card p {
-      font-size: 13px;
-      color: rgba(255,255,255,0.72);
-      margin-bottom: 1.25rem;
-      line-height: 1.7;
-    }
     .cta-link {
       display: inline-block;
-      padding: 12px 28px;
+      padding: 14px 32px;
       background: white;
       color: var(--purple-800);
       border-radius: 10px;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       text-decoration: none;
       transition: opacity 0.15s;
+      margin-bottom: 1.5rem;
     }
     .cta-link:hover { opacity: 0.9; }
 
@@ -290,7 +279,6 @@
       flex-wrap: wrap;
       gap: 8px;
       justify-content: center;
-      margin-top: 1rem;
     }
     .share-tag {
       font-size: 12px;
@@ -301,9 +289,7 @@
       border-radius: 20px;
       cursor: pointer;
       font-family: 'Noto Sans KR', sans-serif;
-      transition: background 0.15s;
     }
-    .share-tag:hover { background: rgba(255,255,255,0.2); }
 
     /* HOW TO */
     .how-to {
@@ -316,7 +302,6 @@
     .how-to h4 { font-size: 13px; font-weight: 700; color: var(--teal-600); margin-bottom: 10px; }
     .how-to p { font-size: 13px; color: #2a5a4a; line-height: 1.75; }
 
-    /* FORMULA */
     .formula {
       background: var(--gray-100);
       border-radius: 8px;
@@ -325,13 +310,11 @@
       color: var(--gray-500);
       margin: 10px 0 0;
       font-family: monospace;
-      letter-spacing: 0.03em;
     }
 
     @media (max-width: 480px) {
       .input-grid { grid-template-columns: 1fr; }
       .num-grid { grid-template-columns: 1fr 1fr; }
-      .hero { padding: 3rem 1rem 2.5rem; }
     }
   </style>
 </head>
@@ -411,4 +394,94 @@
     <h4>계산 방법이 궁금하다면?</h4>
     <p><strong>생애 경로 수</strong>: 생년월일 숫자를 모두 더해 한 자리가 될 때까지 줄이기<br>
     (단, 11 · 22 · 33은 마스터 넘버로 그대로 사용)</p>
-    <div class="formula">예)
+    <div class="formula">예) 1990.02.17 → 1+9+9+0+0+2+1+7 = 29 → 2+9 = 11 (마스터 넘버)</div>
+  </div>
+
+</div>
+
+<script>
+const data = {
+  1: { name: "시작 (Initiation)", tags: ["독립", "새로운 시작", "리더십", "목표지향", "경쟁력"], insight: "당신은 스스로 길을 개척하는 에너지를 타고났습니다. 남의 속도에 맞추기보다 내 방향을 설정하고 주도적으로 나아갈 때 진짜 빛이 나는 사람이에요. 의존보다는 자립, 모방보다는 창시가 맞는 방향입니다." },
+  2: { name: "연결 (Connection)", tags: ["관계", "협력", "균형", "감성적 직관", "평화중재"], insight: "당신의 핵심 에너지는 '관계'에 있습니다. 상대방의 감정을 세심하게 읽고 균형을 맞추는 능력이 탁월해요. 혼자보다 누군가와 함께할 때 더 큰 성과와 행복을 경험하는 유형입니다." },
+  3: { name: "창조 (Creation)", tags: ["창의성", "자기표현", "소통", "낙천성", "예술성"], insight: "밝고 생동감 있는 에너지가 당신의 본질입니다. 말, 글, 예술 등 어떤 방식으로든 자신을 표현할 때 가장 살아있음을 느껴요. 유머와 긍정적인 에너지로 주변을 환하게 만드는 사람입니다." },
+  4: { name: "건설 (Foundation)", tags: ["실용성", "안정", "성실", "근면", "조직력"], insight: "당신은 기반을 다지는 사람입니다. 체계와 계획을 사랑하고, 약속을 지키는 것이 자연스러운 사람이에요. 천천히 쌓지만 무너지지 않는 것이 당신의 방식입니다." },
+  5: { name: "변화 (Change)", tags: ["자유", "모험", "유연성", "도전정신", "진보"], insight: "정체된 상황이 당신을 숨막히게 합니다. 변화, 여행, 새로운 경험이 성장의 원천이에요. 틀을 깨고 나가는 용기가 당신의 가장 큰 자산입니다." },
+  6: { name: "양육 (Nurturing)", tags: ["책임", "가족", "봉사", "공감력", "조화"], insight: "당신은 타인을 돌보는 데서 삶의 의미를 찾습니다. 가족, 커뮤니티, 가까운 사람들이 행복할 때 당신도 행복해요. 책임감과 따뜻함이 당신의 강점입니다." },
+  7: { name: "재평가 (Reflection)", tags: ["내면 탐색", "분석", "직관", "지혜", "고독"], insight: "혼자 있는 시간이 충전의 시간입니다. 표면보다 깊이를 추구하고, 데이터와 직관을 결합해 진실을 꿰뚫는 능력이 있어요. 내면의 소리를 따라갈 때 가장 현명한 선택을 합니다." },
+  8: { name: "확장 (Expansion)", tags: ["권력", "성취", "재물", "영향력", "리더십 실현"], insight: "현실 세계에서 영향력 있게 성공하고자 하는 에너지입니다. 비즈니스 감각과 리더십이 탁월하며, 큰 그림을 그리고 실행하는 데 강점이 있어요." },
+  9: { name: "완성 (Completion)", tags: ["이타심", "마무리", "봉사", "용서", "인류애"], insight: "당신은 나를 넘어 세상을 품는 에너지를 지녔습니다. 개인의 이익보다 전체의 조화를 중요시하고, 누군가의 치유와 성장에 기여할 때 가장 큰 보람을 느껴요." },
+  11: { name: "마스터 비전가 (Master 11)", tags: ["직관", "영감", "비전", "감수성", "영적 통찰"], insight: "마스터 넘버 11 — 강렬한 감수성과 직관으로 세상을 바라보는 영적 비전가입니다. 예술, 철학, 상담 등 빛을 전하는 역할에서 빛납니다.", master: true },
+  22: { name: "마스터 빌더 (Master 22)", tags: ["실행력", "조직력", "대형 프로젝트", "리더십", "창조적 비전"], insight: "마스터 넘버 22 — 큰 그림을 그리고 현실에서 실현하는 마스터 빌더입니다. 세계를 바꾸는 시스템과 조직을 만드는 능력을 가졌어요.", master: true },
+  33: { name: "마스터 교사 (Master 33)", tags: ["치유", "헌신", "교육", "무조건적 사랑", "영적 리더십"], insight: "마스터 넘버 33 — 가장 높은 수준의 헌신과 사랑을 실천하는 마스터 교사입니다. 타인을 가르치고 치유하는 삶이 진정한 사명이에요.", master: true }
+};
+
+function digitSum(str) {
+  return str.split('').reduce((a, c) => a + (parseInt(c) || 0), 0);
+}
+
+function reduceNum(n, isMaster) {
+  while (n > 9) {
+    if (isMaster && (n === 11 || n === 22 || n === 33)) break;
+    let s = 0;
+    String(n).split('').forEach(d => s += parseInt(d));
+    n = s;
+  }
+  return n;
+}
+
+function calcLifePath(y, m, d) {
+  const total = digitSum(String(y)) + digitSum(String(m)) + digitSum(String(d));
+  return reduceNum(total, true);
+}
+
+function calcPersonalYear(m, d) {
+  const total = 9 + digitSum(String(m)) + digitSum(String(d));
+  return reduceNum(total, false);
+}
+
+function calculate() {
+  const y = parseInt(document.getElementById('year').value);
+  const m = parseInt(document.getElementById('month').value);
+  const d = parseInt(document.getElementById('day').value);
+  if (!y || !m || !d || y < 1900 || y > 2010 || d < 1 || d > 31) {
+    alert('생년월일을 올바르게 입력해주세요.');
+    return;
+  }
+  const lp = calcLifePath(y, m, d);
+  const py = calcPersonalYear(m, d);
+  const lpD = data[lp] || data[9];
+  const pyD = data[py] || data[9];
+
+  document.getElementById('lpNum').textContent = lp;
+  document.getElementById('pyNum').textContent = py;
+  document.getElementById('lpName').textContent = lpD.name;
+  document.getElementById('pyName').textContent = pyD.name;
+  document.getElementById('lpNumSmall').textContent = lp;
+  document.getElementById('pyNumSmall').textContent = py;
+
+  let lpTagsHtml = lpD.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  if (lpD.master) lpTagsHtml += `<span class="master-badge">마스터 넘버</span>`;
+  document.getElementById('lpTags').innerHTML = lpTagsHtml;
+  document.getElementById('pyTags').innerHTML = pyD.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  document.getElementById('lpInsight').textContent = lpD.insight;
+  document.getElementById('pyInsight').textContent = pyD.insight;
+
+  const r = document.getElementById('result');
+  r.classList.add('show');
+  setTimeout(() => r.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function shareResult() {
+  const lp = document.getElementById('lpNum').textContent;
+  const py = document.getElementById('pyNum').textContent;
+  const text = `나의 생애 경로 수는 ${lp}, 2025 개인 연도 수는 ${py}! 수비학으로 나의 운명의 숫자를 알아보세요 ✨`;
+  if (navigator.share) {
+    navigator.share({ title: '수비학 리딩 결과', text });
+  } else {
+    navigator.clipboard.writeText(text).then(() => alert('결과가 클립보드에 복사됐어요!'));
+  }
+}
+</script>
+
+</body>
+</html>
