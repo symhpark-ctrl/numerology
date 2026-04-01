@@ -1,67 +1,40 @@
-<div class="hero">
-  <div class="hero-badge">✦ 2026 수비학 리딩</div>
-  <h1>나의 숫자로 읽는<br>2026년 운명의 흐름</h1>
-  <p>생년월일 하나로 타고난 기질과<br>올해(2026년)의 에너지 방향을 알아보세요</p>
-</div>
-
-<div class="container">
-  <div class="result-section" id="result">
-    <div class="num-grid">
-      <div class="num-card lp">
-        <div class="label">생애 경로 수</div>
-        <div class="big" id="lpNum">—</div>
-        <div class="name" id="lpName">—</div>
-      </div>
-      <div class="num-card py">
-        <div class="label">2026 개인 연도 수</div>
-        <div class="big" id="pyNum">—</div>
-        <div class="name" id="pyName">—</div>
-      </div>
-    </div>
-
-    <div class="cta-card">
-      <a href="https://blog.naver.com/symhp1130" class="cta-link">블로그 구독하러 가기 →</a>
-      <div class="share-row">
-        <button class="share-tag" onclick="shareResult()">결과 공유하기</button>
-        <button class="share-tag" onclick="window.scrollTo({top:0,behavior:'smooth'})">다시 계산하기</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="how-to">
-    <h4>계산 방법이 궁금하다면?</h4>
-    <p><strong>생애 경로 수</strong>: 생년월일 숫자를 모두 더해 한 자리가 될 때까지 줄이기</p>
-    <p><strong>2026 개인 연도 수</strong>: 2026(2+0+2+6=10→1) + 탄생 월 + 탄생 일</p>
-    <div class="formula">예) 02월 17일생 → 1(2026) + 2(월) + 1+7(일) = 11 (마스터 넘버)</div>
-  </div>
-</div>
-
-<script>
-// ... (데이터 부분 동일)
-
-// 2026년 기준으로 계산 함수 수정
-function calcPersonalYear(m, d) {
-  // 2026년의 합: 2+0+2+6 = 10 -> 1
-  // 따라서 기본값 1에 월과 일을 더합니다.
-  const total = 1 + digitSum(String(m)) + digitSum(String(d));
-  return reduceNum(total, false);
-}
-
-function calculate() {
-  // ... (입력값 확인 로직 동일)
-  const lp = calcLifePath(y, m, d);
-  const py = calcPersonalYear(m, d);
-  
-  // 결과 출력 및 공유 문구 수정
-  document.getElementById('lpNum').textContent = lp;
-  document.getElementById('pyNum').textContent = py;
-  // ... (나머지 출력 로직 동일)
-}
-
-function shareResult() {
-  const lp = document.getElementById('lpNum').textContent;
-  const py = document.getElementById('pyNum').textContent;
-  const text = `나의 생애 경로 수는 ${lp}, 2026 개인 연도 수는 ${py}! 2026년 나의 운세를 확인해보세요 ✨`;
-  // ... (공유 로직 동일)
-}
-</script>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>수비학 계산기 — 나의 생애 경로 수 & 개인 연도 수</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple-50: #EEEDFE; --purple-200: #AFA9EC; --purple-400: #7F77DD; --purple-600: #534AB7; --purple-800: #3C3489;
+      --teal-50: #E1F5EE; --teal-400: #1D9E75; --teal-600: #0F6E56;
+      --amber-50: #FAEEDA; --amber-600: #854F0B;
+      --gray-50: #F8F7F4; --gray-100: #EFEFEA; --gray-300: #C8C7BF; --gray-500: #888780; --gray-800: #2C2C2A; --white: #FFFFFF;
+    }
+    body { font-family: 'Noto Sans KR', sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; line-height: 1.7; }
+    .hero { background: var(--purple-800); color: white; text-align: center; padding: 4rem 1.5rem 3rem; position: relative; overflow: hidden; }
+    .hero-badge { display: inline-block; font-size: 11px; letter-spacing: 0.1em; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); padding: 5px 14px; border-radius: 20px; margin-bottom: 1.25rem; }
+    .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 600; line-height: 1.35; margin-bottom: 0.75rem; position: relative; }
+    .container { max-width: 640px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .card { background: var(--white); border-radius: 16px; border: 1px solid var(--gray-100); padding: 1.75rem; margin-bottom: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+    .card-title { font-size: 13px; font-weight: 700; color: var(--purple-600); margin-bottom: 1.25rem; text-transform: uppercase; }
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
+    .field label { display: block; font-size: 12px; color: var(--gray-500); margin-bottom: 6px; }
+    .field input, .field select { width: 100%; padding: 11px 13px; border: 1.5px solid var(--gray-300); border-radius: 10px; font-size: 15px; background: var(--gray-50); }
+    .btn-main { width: 100%; padding: 15px; background: var(--purple-800); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+    .btn-main:hover { background: var(--purple-600); }
+    .result-section { display: none; }
+    .result-section.show { display: block; }
+    .num-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
+    .num-card { background: var(--gray-50); border-radius: 12px; padding: 1.25rem; text-align: center; border: 1px solid var(--gray-100); }
+    .num-card .label { font-size: 11px; color: var(--gray-500); font-weight: 500; margin-bottom: 10px; }
+    .num-card .big { font-size: 58px; font-weight: 700; font-family: 'Noto Serif KR', serif; line-height: 1; }
+    .lp .big, .lp .name { color: var(--purple-800); }
+    .py .big, .py .name { color: var(--teal-600); }
+    .meaning-card { background: var(--white); border-radius: 16px; border: 1px solid var(--gray-100); padding: 1.5rem; margin-bottom: 1rem; }
+    .meaning-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .dot-lp { width: 8px; height: 8px; border-radius: 50%; background: var(--purple-600); }
+    .dot-py { width: 8px; height: 8px; border-radius:
