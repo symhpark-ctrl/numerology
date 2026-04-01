@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>수비학 계산기 — 나의 생애 경로 수 & 개인 연도 수</title>
+  <title>수비학 계산기 — 2026년 운세</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
@@ -11,7 +11,6 @@
     :root {
       --purple-50: #EEEDFE; --purple-200: #AFA9EC; --purple-400: #7F77DD; --purple-600: #534AB7; --purple-800: #3C3489;
       --teal-50: #E1F5EE; --teal-400: #1D9E75; --teal-600: #0F6E56;
-      --amber-50: #FAEEDA; --amber-600: #854F0B;
       --gray-50: #F8F7F4; --gray-100: #EFEFEA; --gray-300: #C8C7BF; --gray-500: #888780; --gray-800: #2C2C2A; --white: #FFFFFF;
     }
     body { font-family: 'Noto Sans KR', sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; line-height: 1.7; }
@@ -26,7 +25,7 @@
     .field input, .field select { width: 100%; padding: 11px 13px; border: 1.5px solid var(--gray-300); border-radius: 10px; font-size: 15px; background: var(--gray-50); }
     .btn-main { width: 100%; padding: 15px; background: var(--purple-800); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
     .btn-main:hover { background: var(--purple-600); }
-    .result-section { display: none; }
+    .result-section { display: none; padding-top: 1rem; }
     .result-section.show { display: block; }
     .num-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
     .num-card { background: var(--gray-50); border-radius: 12px; padding: 1.25rem; text-align: center; border: 1px solid var(--gray-100); }
@@ -37,4 +36,139 @@
     .meaning-card { background: var(--white); border-radius: 16px; border: 1px solid var(--gray-100); padding: 1.5rem; margin-bottom: 1rem; }
     .meaning-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
     .dot-lp { width: 8px; height: 8px; border-radius: 50%; background: var(--purple-600); }
-    .dot-py { width: 8px; height: 8px; border-radius:
+    .dot-py { width: 8px; height: 8px; border-radius: 50%; background: var(--teal-400); }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .tag { font-size: 12px; background: var(--gray-100); color: var(--gray-500); padding: 4px 10px; border-radius: 20px; }
+    .insight { font-size: 14px; color: #555; border-left: 3px solid var(--purple-200); padding-left: 14px; }
+    .insight.teal { border-left-color: var(--teal-400); }
+    .cta-card { background: var(--purple-800); border-radius: 16px; padding: 2.5rem 1.5rem; text-align: center; color: white; margin-top: 2rem; }
+    .cta-link { display: inline-block; padding: 14px 32px; background: white; color: var(--purple-800); border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; margin-bottom: 1.5rem; }
+    .share-row { display: flex; gap: 8px; justify-content: center; }
+    .share-tag { font-size: 12px; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 7px 14px; border-radius: 20px; cursor: pointer; }
+    @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">✦ 스마트 수비학 리딩</div>
+  <h1>나의 숫자로 읽는<br><span id="heroYear"></span>년 운명의 흐름</h1>
+  <p>타고난 기질과 올해의 에너지를 확인하세요</p>
+</div>
+
+<div class="container">
+  <div class="card">
+    <div class="card-title">생년월일 입력</div>
+    <div class="input-grid">
+      <div class="field"><label>연도</label><input type="number" id="year" placeholder="1990"></div>
+      <div class="field"><label>월</label><select id="month"><option value="1">1월</option><option value="2">2월</option><option value="3">3월</option><option value="4">4월</option><option value="5">5월</option><option value="6">6월</option><option value="7">7월</option><option value="8">8월</option><option value="9">9월</option><option value="10">10월</option><option value="11">11월</option><option value="12">12월</option></select></div>
+      <div class="field"><label>일</label><input type="number" id="day" placeholder="17"></div>
+    </div>
+    <button class="btn-main" onclick="calculate()">나의 수비학 수 계산하기 →</button>
+  </div>
+
+  <div class="result-section" id="result">
+    <div class="num-grid">
+      <div class="num-card lp"><div class="label">생애 경로 수</div><div class="big" id="lpNum">—</div><div class="name" id="lpName"></div></div>
+      <div class="num-card py">
+        <div class="label"><span id="pyYearLabel"></span> 개인 연도 수</div>
+        <div class="big" id="pyNum">—</div><div class="name" id="pyName"></div>
+      </div>
+    </div>
+    <div class="meaning-card">
+      <h3><span class="dot-lp"></span> 타고난 기질 — 생애 경로 수 <span id="lpNumSmall"></span></h3>
+      <div class="tags" id="lpTags"></div>
+      <div class="insight" id="lpInsight"></div>
+    </div>
+    <div class="meaning-card">
+      <h3><span class="dot-py"></span> <span id="pyDetailYear"></span>년 에너지 흐름 <span id="pyNumSmall"></span></h3>
+      <div class="tags" id="pyTags"></div>
+      <div class="insight teal" id="pyInsight"></div>
+    </div>
+
+    <div class="cta-card">
+      <a href="https://blog.naver.com/symhp1130" class="cta-link">블로그 구독하러 가기 →</a>
+      <div class="share-row">
+        <button class="share-tag" onclick="shareResult()">결과 공유하기</button>
+        <button class="share-tag" onclick="window.scrollTo({top:0,behavior:'smooth'})">다시 계산하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 1. 현재 연도 자동 설정 (2026년이면 2026을 가져옴)
+const currentYear = new Date().getFullYear();
+
+// 2. 화면의 연도 텍스트들을 실행되자마자 바꿔줌
+document.getElementById('heroYear').innerText = currentYear;
+document.getElementById('pyYearLabel').innerText = currentYear;
+document.getElementById('pyDetailYear').innerText = currentYear;
+
+const data = {
+  1: { name: "시작 (Initiation)", tags: ["독립", "새로운 시작", "리더십"], insight: "당신은 스스로 길을 개척하는 에너지를 타고났습니다. 남의 속도에 맞추기보다 내 방향을 설정하고 주도적으로 나아갈 때 빛이 납니다." },
+  2: { name: "연결 (Connection)", tags: ["관계", "협력", "균형"], insight: "상대방의 감정을 세심하게 읽고 균형을 맞추는 능력이 탁월해요. 혼자보다 누군가와 함께할 때 더 큰 성과를 얻는 유형입니다." },
+  3: { name: "창조 (Creation)", tags: ["창의성", "소통", "낙천성"], insight: "밝고 생동감 있는 에너지가 당신의 본질입니다. 어떤 방식으로든 자신을 표현할 때 가장 살아있음을 느끼며 주변을 환하게 만듭니다." },
+  4: { name: "건설 (Foundation)", tags: ["안정", "성실", "근면"], insight: "당신은 기반을 다지는 사람입니다. 체계와 계획을 사랑하고, 천천히 쌓아 올리지만 절대 무너지지 않는 단단함을 지녔습니다." },
+  5: { name: "변화 (Change)", tags: ["자유", "모험", "도전"], insight: "정체된 상황을 견디기 힘들어합니다. 변화와 새로운 경험이 성장의 원천이며, 틀을 깨고 나가는 용기가 당신의 가장 큰 자산입니다." },
+  6: { name: "양육 (Nurturing)", tags: ["책임", "사랑", "봉사"], insight: "타인을 돌보는 데서 삶의 의미를 찾습니다. 가족과 주변 사람들이 행복할 때 당신도 깊은 행복을 느끼는 따뜻한 리더입니다." },
+  7: { name: "재평가 (Reflection)", tags: ["분석", "직관", "지혜"], insight: "표면보다 깊이를 추구합니다. 혼자만의 시간을 통해 내면의 소리에 집중할 때 가장 현명하고 통찰력 있는 답을 얻습니다." },
+  8: { name: "확장 (Expansion)", tags: ["성취", "영향력", "리더십"], insight: "현실 세계에서 영향력을 발휘하고자 하는 에너지입니다. 비즈니스 감각이 뛰어나며 큰 그림을 실행에 옮기는 힘이 강력합니다." },
+  9: { name: "완성 (Completion)", tags: ["이타심", "마무리", "치유"], insight: "나를 넘어 세상을 품는 에너지를 지녔습니다. 누군가에게 기여할 때 보람을 느끼며, 넓은 시야로 삶의 한 단계를 멋지게 마무리합니다." },
+  11: { name: "마스터 11", tags: ["직관", "영감", "비전"], insight: "강렬한 직관으로 빛을 전하는 영적 비전가입니다. 남들이 보지 못하는 것을 보며 세상에 영감을 주는 역할을 합니다." },
+  22: { name: "마스터 22", tags: ["실행력", "창조적 비전", "조직"], insight: "큰 꿈을 현실로 만드는 마스터 빌더입니다. 거대한 시스템이나 조직을 구축하여 실질적인 변화를 만드는 능력이 있습니다." },
+  33: { name: "마스터 33", tags: ["치유", "헌신", "무조건적 사랑"], insight: "가장 높은 수준의 사랑과 헌신을 실천합니다. 타인을 가르치고 치유하며 영적인 이정표가 되어주는 사명을 지녔습니다." }
+};
+
+function digitSum(n) {
+  return String(n).split('').reduce((a, c) => a + (parseInt(c) || 0), 0);
+}
+
+function reduceNum(n, isMaster) {
+  while (n > 9) {
+    if (isMaster && (n === 11 || n === 22 || n === 33)) break;
+    n = digitSum(n);
+  }
+  return n;
+}
+
+function calculate() {
+  const y = parseInt(document.getElementById('year').value);
+  const m = parseInt(document.getElementById('month').value);
+  const d = parseInt(document.getElementById('day').value);
+  if (!y || !m || !d) { alert('날짜를 입력해주세요.'); return; }
+
+  // 생애경로수 계산
+  const lp = reduceNum(digitSum(y) + digitSum(m) + digitSum(d), true);
+  
+  // 개인연도수 계산 (현재 연도 합 + 월 합 + 일 합)
+  const py = reduceNum(digitSum(currentYear) + digitSum(m) + digitSum(d), false);
+
+  document.getElementById('lpNum').innerText = lp;
+  document.getElementById('pyNum').innerText = py;
+  document.getElementById('lpName').innerText = data[lp].name;
+  document.getElementById('pyName').innerText = data[py].name;
+  document.getElementById('lpNumSmall').innerText = '(' + lp + ')';
+  document.getElementById('pyNumSmall').innerText = '(' + py + ')';
+  document.getElementById('lpInsight').innerText = data[lp].insight;
+  document.getElementById('pyInsight').innerText = data[py].insight;
+  document.getElementById('lpTags').innerHTML = data[lp].tags.map(t => `<span class="tag">${t}</span>`).join('');
+  document.getElementById('pyTags').innerHTML = data[py].tags.map(t => `<span class="tag">${t}</span>`).join('');
+  
+  document.getElementById('result').classList.add('show');
+  window.scrollTo({ top: document.getElementById('result').offsetTop - 20, behavior: 'smooth' });
+}
+
+function shareResult() {
+  const lp = document.getElementById('lpNum').textContent;
+  const py = document.getElementById('pyNum').textContent;
+  const text = `나의 생애 경로 수는 ${lp}, ${currentYear} 개인 연도 수는 ${py}! 수비학으로 올해 나의 운세를 확인해보세요 ✨`;
+  if (navigator.share) {
+    navigator.share({ title: '수비학 리딩 결과', text });
+  } else {
+    navigator.clipboard.writeText(text).then(() => alert('결과가 클립보드에 복사됐어요!'));
+  }
+}
+</script>
+</body>
+</html>
