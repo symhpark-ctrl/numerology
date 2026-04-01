@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>수비학 계산기 — 나의 운명의 숫자는?</title>
+  
+  <title>수비학 탄생수 계산기 - 나의 인생 설계도 확인하기</title>
+  <meta name="description" content="생년월일로 확인하는 무료 수비학 탄생수(생애 경로 수) 계산기. 당신이 타고난 기질과 인생의 핵심 테마를 정통 수비학으로 풀어드립니다.">
+  <meta name="keywords" content="수비학, 탄생수, 생애경로수, 무료운세, 수비학계산기, 인생번호, 기질테스트, 2026년운세">
+  <meta property="og:title" content="📝 나의 수비학 인생 설계도">
+  <meta property="og:description" content="생년월일 숫자에 숨겨진 당신의 진짜 기질을 확인하세요.">
+  <meta property="og:type" content="website">
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
@@ -15,14 +22,12 @@
     }
     body { font-family: 'Noto Sans KR', sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; line-height: 1.7; }
     
-    /* 상단 헤더 */
     .hero { background: var(--purple-800); color: white; text-align: center; padding: 3rem 1.5rem 2rem; }
     .hero h1 { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; }
     .hero p { font-size: 0.95rem; color: rgba(255,255,255,0.8); }
 
     .container { max-width: 640px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
-    /* 입력 카드 */
     .card { background: var(--white); border-radius: 16px; border: 1px solid var(--gray-100); padding: 2rem 1.75rem; margin-bottom: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
     .card-title { font-size: 14px; font-weight: 700; color: var(--purple-600); margin-bottom: 1.5rem; }
     
@@ -34,7 +39,6 @@
     .btn-main { width: 100%; padding: 16px; background: var(--purple-800); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
     .btn-main:hover { background: var(--purple-600); }
 
-    /* 결과 섹션 */
     .result-section { display: none; }
     .result-section.show { display: block; }
     .num-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
@@ -48,14 +52,17 @@
     .insight { font-size: 14px; color: #555; border-left: 3px solid var(--purple-200); padding-left: 14px; }
     .insight.teal { border-left-color: var(--teal-400); }
 
-    /* 하단 안내 및 버튼 */
     .how-to { background: var(--teal-50); border-radius: 14px; padding: 1.5rem; border: 1px solid rgba(29,158,117,0.15); margin-top: 1rem; }
     .how-to h4 { font-size: 14px; font-weight: 700; color: var(--teal-600); margin-bottom: 10px; }
     .how-to p { font-size: 13px; color: #2a5a4a; margin-bottom: 8px; }
     .formula { background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px; font-size: 13px; color: var(--gray-500); }
 
+    /* 하단 구독 및 이동 섹션 */
     .cta-card { background: var(--purple-800); border-radius: 16px; padding: 2rem 1.5rem; text-align: center; color: white; margin-top: 2rem; }
-    .cta-link { display: inline-block; padding: 14px 32px; background: white; color: var(--purple-800); border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; margin-bottom: 1rem; }
+    .cta-link { display: inline-block; padding: 14px 32px; background: #03c75a; color: white; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; margin-bottom: 1rem; transition: 0.2s; }
+    .cta-link:hover { background: #02b350; transform: scale(1.05); }
+    .secondary-btn { display: inline-block; padding: 10px 20px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 10px; font-size: 13px; text-decoration: none; margin-top: 15px; transition: 0.2s; }
+    .secondary-btn:hover { background: rgba(255,255,255,0.2); }
     
     @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
   </style>
@@ -98,8 +105,13 @@
     </div>
     
     <div class="cta-card">
-      <a href="https://blog.naver.com/symhp1130" class="cta-link">블로그 구독하러 가기 →</a>
+      <p style="margin-bottom: 15px; font-size: 14px;">매일 업데이트되는 운명 이야기가 궁금하다면?</p>
+      <a href="https://blog.naver.com/symhpark" class="cta-link">네이버 블로그 구독하기 💚</a>
       <div style="font-size: 12px; opacity: 0.7;">더 깊은 리딩은 블로그에서 확인하세요</div>
+      
+      <a href="https://symhpark-ctrl.github.io/tarot/" class="secondary-btn">
+        🔮 타로 성격/영혼카드 계산기로 이동
+      </a>
     </div>
   </div>
 
