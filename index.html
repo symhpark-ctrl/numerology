@@ -3,38 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>수비학 탄생수 계산기 - 나의 인생 설계도</title>
+  <title>수비학 탄생수 계산기 - 나의 인생 설계도 & 올해의 운세</title>
+  <meta name="description" content="생년월일로 확인하는 무료 수비학 탄생수와 개인 연도 수 계산기. 당신의 기질과 올해의 에너지 흐름을 확인하세요.">
+  <meta property="og:title" content="📝 나의 수비학 인생 설계도">
+  <meta property="og:description" content="생년월일에 숨겨진 당신의 진짜 기질과 올해의 운세를 확인하세요.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --p-800: #3C3489; --p-600: #534AB7; --p-400: #7F77DD; --bg: #F8F7F4; }
+    :root { --p-800: #3C3489; --p-600: #534AB7; --p-400: #7F77DD; --teal: #1D9E75; --bg: #F8F7F4; }
     body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: #2c2c2a; line-height: 1.7; padding-bottom: 50px; }
-    .hero { background: var(--p-800); color: white; text-align: center; padding: 4rem 1.5rem; }
+    .hero { background: var(--p-800); color: white; text-align: center; padding: 4rem 1.5rem 3rem; }
     .hero h1 { font-family: 'Noto Serif KR', serif; font-size: 2rem; margin-bottom: 10px; }
     .container { max-width: 600px; margin: -30px auto 0; padding: 0 20px; }
     .card { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px; }
     .input-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px; }
     .field label { display: block; font-size: 13px; color: #666; margin-bottom: 8px; font-weight: 600; }
     input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #eee; font-size: 16px; transition: 0.3s; }
-    input:focus { border-color: var(--p-400); outline: none; }
     .btn-main { width: 100%; padding: 18px; background: var(--p-800); color: white; border: none; border-radius: 15px; font-size: 17px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-    .btn-main:hover { background: var(--p-600); transform: translateY(-2px); }
     .result-section { display: none; animation: fadeIn 0.8s; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .res-num { font-size: 60px; font-family: 'Noto Serif KR', serif; color: var(--p-800); font-weight: 700; margin: 10px 0; }
-    .res-title { font-size: 20px; font-weight: 700; margin-bottom: 15px; color: #333; }
-    .res-desc { background: #f9f8ff; padding: 20px; border-radius: 15px; border-left: 4px solid var(--p-400); font-size: 15px; color: #444; text-align: left; }
+    .num-box { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+    .mini-card { background: #f9f8ff; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #eee; }
+    .res-num { font-size: 45px; font-family: 'Noto Serif KR', serif; color: var(--p-800); font-weight: 700; }
+    .res-desc { background: #fff; padding: 20px; border-radius: 15px; border-left: 4px solid var(--p-400); font-size: 15px; color: #444; margin-bottom: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
     .cta-card { background: var(--p-800); border-radius: 20px; padding: 35px 20px; text-align: center; color: white; margin-top: 30px; }
-    .naver-btn { display: inline-block; padding: 15px 30px; background: #03c75a; color: white; border-radius: 50px; text-decoration: none; font-weight: 700; margin-bottom: 20px; transition: 0.3s; }
-    .naver-btn:hover { background: #02b350; transform: scale(1.05); }
-    .move-btn { display: inline-block; padding: 12px 24px; background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.5); border-radius: 12px; text-decoration: none; font-size: 14px; transition: 0.2s; }
-    .move-btn:hover { background: rgba(255,255,255,0.25); }
-    @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
+    .naver-btn { display: inline-block; padding: 15px 30px; background: #03c75a; color: white; border-radius: 50px; text-decoration: none; font-weight: 700; margin-bottom: 20px; }
+    .move-btn { display: inline-block; padding: 12px 24px; background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.5); border-radius: 12px; text-decoration: none; font-size: 14px; }
+    @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } .num-box { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-<div class="hero"><h1>📝 수비학 탄생수 계산기</h1><p>당신의 생년월일에 숨겨진 인생 설계도를 확인하세요</p></div>
+<div class="hero"><h1>📝 수비학 운명 계산기</h1><p>생년월일로 기질과 <span id="thisYear"></span>년의 에너지를 확인하세요</p></div>
 <div class="container">
   <div class="card">
     <div class="input-grid">
@@ -42,46 +42,66 @@
       <div class="field"><label>태어난 월</label><select id="month"><option value="1">1월</option><option value="2">2월</option><option value="3">3월</option><option value="4">4월</option><option value="5">5월</option><option value="6">6월</option><option value="7">7월</option><option value="8">8월</option><option value="9">9월</option><option value="10">10월</option><option value="11">11월</option><option value="12">12월</option></select></div>
       <div class="field"><label>태어난 일</label><input type="number" id="day" placeholder="17"></div>
     </div>
-    <button class="btn-main" onclick="calculate()">내 운명의 숫자 확인하기 →</button>
+    <button class="btn-main" onclick="calculate()">나의 수비학 결과 확인하기 →</button>
   </div>
   <div id="result" class="result-section">
-    <div class="card" style="text-align:center;">
-      <div style="font-size:14px; color:#888;">당신의 생애 경로 수</div>
-      <div class="res-num" id="resNum"></div>
-      <div class="res-title" id="resTitle"></div>
-      <div class="res-desc" id="resDesc"></div>
+    <div class="num-box">
+        <div class="mini-card">
+            <div style="font-size:12px; color:#888;">생애 경로 수</div>
+            <div class="res-num" id="lpNum"></div>
+            <div style="font-weight:700;" id="lpName"></div>
+        </div>
+        <div class="mini-card">
+            <div style="font-size:12px; color:#888;"><span class="curY"></span> 개인 연도 수</div>
+            <div class="res-num" id="pyNum" style="color:var(--teal);"></div>
+            <div style="font-weight:700;" id="pyName"></div>
+        </div>
+    </div>
+    <div class="card">
+        <h4 style="margin-bottom:10px;">✨ 생애 경로 수 해설</h4>
+        <div class="res-desc" id="lpDesc"></div>
+        <h4 style="margin-bottom:10px;">📅 <span class="curY"></span>년 운세 흐름</h4>
+        <div class="res-desc" style="border-left-color:var(--teal);" id="pyDesc"></div>
     </div>
     <div class="cta-card">
-        <p style="margin-bottom:20px; font-size:16px;">🔮 매일 업데이트되는 운세와 리딩!</p>
+        <p style="margin-bottom:20px; font-size:16px;">🔮 매일 업데이트되는 운세 리딩!</p>
         <a href="https://blog.naver.com/symhp1130" target="_blank" class="naver-btn">네이버 블로그 구독하기 💚</a><br>
         <a href="https://symhpark-ctrl.github.io/tarot/" class="move-btn">🔮 타로 성격/영혼카드 계산기로 이동</a>
     </div>
   </div>
 </div>
 <script>
+const curYear = new Date().getFullYear();
+document.querySelectorAll('.curY').forEach(el => el.innerText = curYear);
+document.getElementById('thisYear').innerText = curYear;
+
 const info = {
-  1: {n:"독립적인 개척자", t:"스스로 길을 만드는 리더의 에너지를 가졌습니다. 자신감이 넘치고 독립적이지만, 때로는 타인의 의견을 경청하는 유연함이 필요합니다."},
-  2: {n:"조화로운 중재자", t:"협력과 배려가 당신의 가장 큰 힘입니다. 사람 사이의 갈등을 해결하는 능력이 탁월하며 예민한 직관력을 지녔습니다."},
-  3: {n:"창의적인 표현가", t:"예술적 감각과 소통 능력이 뛰어납니다. 즐거움과 긍정의 에너지를 전파하며 창조적인 활동에서 보람을 느낍니다."},
-  4: {n:"안정적인 건설가", t:"성실함과 질서를 중요시하는 현실적인 실천가입니다. 탄탄한 기반을 다지고 목표를 완수하는 끈기가 대단합니다."},
-  5: {n:"자유로운 모험가", t:"변화와 자유를 갈망하는 역동적인 영혼입니다. 새로운 경험을 두려워하지 않으며 빠른 적응력과 다재다능함을 가졌습니다."},
-  6: {n:"책임감 있는 양육자", t:"사랑과 봉사를 실천하는 따뜻한 마음의 소유자입니다. 가족과 공동체를 돌보는 일에서 인생의 큰 의미를 찾습니다."},
-  7: {n:"지혜로운 탐구자", t:"내면의 진리와 지식을 탐구하는 분석가입니다. 고독을 즐기며 깊은 성찰을 통해 삶의 본질을 꿰뚫는 통찰력이 있습니다."},
-  8: {n:"강력한 성취자", t:"권위와 성공, 물질적 성취에 능력이 탁월합니다. 큰 조직을 운영하거나 비즈니스적인 감각이 매우 뛰어납니다."},
-  9: {n:"인류애를 품은 완성자", t:"세상을 품는 넓은 마음을 가진 인도주의자입니다. 자신의 경험과 지혜를 타인에게 나누고 봉사하는 숙명을 가졌습니다."},
-  11: {n:"직관적인 비전가", t:"강력한 영적 에너지와 직관력을 지닌 마스터 넘버입니다. 세상을 밝히는 영감의 등불 같은 역할을 수행합니다."},
-  22: {n:"현실의 마스터 빌더", t:"거대한 꿈을 현실로 만드는 능력이 있는 마스터 넘버입니다. 인류를 위한 대형 프로젝트를 실현할 잠재력이 있습니다."},
-  33: {n:"치유의 마스터 교사", t:"조건 없는 사랑과 자비로 타인을 치유하는 마스터 넘버입니다. 영적인 스승으로서 타인의 성장을 돕습니다."}
+  1: {n:"독립적인 개척자", t:"스스로 길을 만드는 리더의 에너지를 가졌습니다. 자신감이 넘치고 독립적입니다.", y:"새로운 9년 주기의 시작입니다. 새로운 프로젝트나 변화를 시도하기에 완벽한 해입니다."},
+  2: {n:"조화로운 중재자", t:"협력과 배려가 당신의 가장 큰 힘입니다. 사람 사이의 갈등을 해결하는 능력이 탁월합니다.", y:"기다림과 인내의 시간입니다. 서두르기보다 주변과 조화를 이루며 내실을 다지세요."},
+  3: {n:"창의적인 표현가", t:"예술적 감각과 소통 능력이 뛰어납니다. 즐거움과 긍정의 에너지를 전파합니다.", y:"사교 활동과 자기표현이 활발해지는 해입니다. 당신의 아이디어를 세상에 널리 알리세요."},
+  4: {n:"안정적인 건설가", t:"성실함과 질서를 중요시하는 실천가입니다. 탄탄한 기반을 다지는 데 탁월합니다.", y:"노력과 성실함이 요구되는 해입니다. 체계를 세우고 기초를 튼튼히 하는 데 집중하세요."},
+  5: {n:"자유로운 모험가", t:"변화와 자유를 갈망하는 역동적인 영혼입니다. 빠른 적응력과 다재다능함을 가졌습니다.", y:"많은 변화와 기회가 찾아오는 역동적인 해입니다. 여행이나 새로운 도전을 즐기기에 좋습니다."},
+  6: {n:"책임감 있는 양육자", t:"사랑과 봉사를 실천하는 따뜻한 마음의 소유자입니다. 가족을 돌보는 일에 능숙합니다.", y:"가정의 화합과 책임감이 강조되는 해입니다. 주변 사람들을 돌보며 관계의 깊이를 더하세요."},
+  7: {n:"지혜로운 탐구자", t:"내면의 진리와 지식을 탐구하는 분석가입니다. 깊은 성찰을 통해 삶을 이해합니다.", y:"내면의 성찰과 공부가 필요한 시기입니다. 외부 활동보다 자신을 돌아보며 지혜를 쌓으세요."},
+  8: {n:"강력한 성취자", t:"권위와 성공, 물질적 성취에 능력이 탁월합니다. 비즈니스 감각이 매우 뛰어납니다.", y:"수확과 보상의 해입니다. 그동안의 노력이 물질적 성과나 사회적 인정으로 나타납니다."},
+  9: {n:"인류애를 품은 완성자", t:"세상을 품는 넓은 마음을 가진 인도주의자입니다. 자신의 지혜를 타인에게 나눕니다.", y:"하나의 주기를 마무리하는 해입니다. 불필요한 것을 정리하고 다음 단계를 준비하는 시기입니다."},
+  11: {n:"직관적인 비전가", t:"강력한 영적 에너지와 직관력을 지닌 마스터 넘버입니다.", y:"직관이 매우 날카로워지는 해입니다. 영감을 따라 행동하면 큰 깨달음을 얻을 수 있습니다."},
+  22: {n:"현실의 마스터 빌더", t:"거대한 꿈을 현실로 만드는 능력이 있는 마스터 넘버입니다.", y:"큰 프로젝트를 실현할 수 있는 강력한 에너지의 해입니다. 현실적인 실천력이 중요합니다."},
+  33: {n:"치유의 마스터 교사", t:"조건 없는 사랑과 자비로 타인을 치유하는 마스터 넘버입니다.", y:"사랑과 치유를 전파하는 사명을 수행하는 해입니다. 타인을 돕는 활동에서 보람을 얻습니다."}
 };
 function getSum(n) { return String(n).split('').reduce((a,b)=>a+Number(b),0); }
 function reduce(n,m) { while(n>9){ if(m&&(n==11||n==22||n==33))break; n=getSum(n); } return n; }
 function calculate() {
   const y=document.getElementById('year').value, m=document.getElementById('month').value, d=document.getElementById('day').value;
-  if(!y||!m||!d) return alert("생년월일을 모두 입력해주세요.");
+  if(!y||!m||!d) return alert("생년월일을 입력해주세요.");
   const lp=reduce(getSum(y)+getSum(m)+getSum(d), true);
-  document.getElementById('resNum').innerText = lp;
-  document.getElementById('resTitle').innerText = "「" + info[lp].n + "」";
-  document.getElementById('resDesc').innerText = info[lp].t;
+  const py=reduce(getSum(curYear)+getSum(m)+getSum(d), false);
+  document.getElementById('lpNum').innerText = lp;
+  document.getElementById('pyNum').innerText = py;
+  document.getElementById('lpName').innerText = info[lp].n;
+  document.getElementById('pyName').innerText = info[py].n;
+  document.getElementById('lpDesc').innerText = info[lp].t;
+  document.getElementById('pyDesc').innerText = info[py].y;
   document.getElementById('result').style.display = 'block';
   window.scrollTo({ top: document.getElementById('result').offsetTop - 30, behavior: 'smooth' });
 }
